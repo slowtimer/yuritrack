@@ -158,7 +158,6 @@ old_shift_y = 0
 
 eyes = pygame.image.load('eyes2.png')
 body = pygame.image.load('eyes1.png')
-bg = pygame.image.load('closet.png')
 icon = pygame.image.load('icon.png')
 pygame.display.set_icon(icon)
 pygame.display.set_caption("Yuri is watching...")
@@ -172,9 +171,11 @@ beats_f = (0.75, 0.9)
 pygame.mixer.music.set_volume(1)
 
 if sys.argv[1:]: # any argument calls the 1.
-    color_overlay = (40, 0, 0, 200) # R G B alpha
+    bg = pygame.image.load('club.png')
+    color_overlay = (20, 0, 0, 200) # R G B alpha
     sound = pygame.mixer.music.load('5_yuri2.ogg')
 else: # no argument
+    bg = pygame.image.load('closet.png')
     color_overlay = (0, 0, 0, 200) # R G B alpha
     sound = pygame.mixer.music.load('heartbeat.ogg')
 
