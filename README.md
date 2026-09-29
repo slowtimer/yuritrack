@@ -7,9 +7,7 @@ If you ever felt safe, you can forget it.
 * http://ddlc.moe
 
 If you haven't played yet, welcome and go play it now. It's a nice simple dating sim. You won't regret it... hopefuly.
-For extracting assets you can use `unrpa`.
-- https://github.com/Lattyware/unrpa
-
+For extracting assets you can use `(unrpa)[https://github.com/Lattyware/unrpa]`.
 * https://github.com/Aditya-Khadilkar/Face-tracking-with-Anime-characters
 
 This is the main reference for eye tracking, all other logic & rendering is independant.
@@ -49,7 +47,7 @@ When any command line argument is provided you will get an alternative setup.
 
 > "Do you like it??"
 > "I wrote it fot you!"
-> - Yuri
+> -- Yuri
 
 For cleaner experience you can redirect cout to null.
 
