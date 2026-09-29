@@ -68,3 +68,5 @@ rules: ({
 ```
 
 Now run yuri.py, set it to fullscreen and run i3lock. Everyone around you will appreciate it.
+
+![iseeyou](example.gif)
