@@ -9,11 +9,16 @@ try:
 except ImportError:
     pass
 import sys
+import platform
 import pygame
 from math import sin, cos, radians
 from time import sleep
 import random
 import cv2
+
+def log(text):
+    #print(text)
+    return
 
 def fmap(num, smin, smax, tmin, tmax):
     source_range = (smax - smin)
@@ -59,7 +64,7 @@ def eyeshift():
     global old_shift_x
     global old_shift_y
 
-    print("\x1b[H")
+    log("\x1b[H")
 
     # copycat
     ret, img = cam.read()
@@ -75,8 +80,6 @@ def eyeshift():
     shift_y = old_shift_y
     for x, y, w, h in detected[-1:]:
         cv2.rectangle(img, (x, y), (x+w, y+h), (255,0,0), 2)
-        #shift_x = float(x) / float(w) * 2 - 1 #(x+w)/2
-        #shift_y = float(y) / float(h) * 2 - 1 #2*(y+h)/3 # to look at the eyes
         shift_x = float(x) / float(w) * 2 - 2
         shift_y = float(y) / float(h) * 2 - 2
     # end of copycat
@@ -84,8 +87,8 @@ def eyeshift():
     old_shift_x = shift_x
     old_shift_y = shift_y
 
-    print(str(shift_x) + "                ")
-    print(str(shift_y) + "                ")
+    log(str(shift_x) + "                ")
+    log(str(shift_y) + "                ")
 
     # random shift
     delta = 0.03
@@ -100,8 +103,6 @@ def eyeshift():
     return (shift_x, shift_y)
 
 def update_img(screen):
-    #pygame.Surface.fill(screen, (0, 0, 0))
-
     scale = float(height) / img_height * beat_zoom()
     x = (width - img_width * scale) / 2
     y = height - img_height * scale + ((beat_zoom() - 1) * height)
@@ -119,10 +120,14 @@ def update_img(screen):
     screen.blit(_bg, (x, y))
     screen.blit(_body, (x, y))
     screen.blit(_eyes, (ex, ey))
-    pygame.draw.rect(screen, color_overlay, (0, 0, width, height))
+    overlay = pygame.Surface((width, height))
+    overlay.set_alpha(color_overlay[3])
+    overlay.fill(color_overlay)
+    screen.blit(overlay, (0,0))
 
-def loop():
-    screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+def loop(screen):
+    if screen is None:
+        screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
     update_img(screen)
     pygame.display.flip()
 
@@ -181,7 +186,16 @@ else: # no argument
 
 pygame.mixer.music.play(-1)
 
-print("\x1b[2J")
+screen = None
+if platform.system() == "Windows":
+    screen = pygame.display.set_mode((width, height), pygame.RESIZABLE)
+# UGHHH...
+# why must set_mode be called only once on Windows
+# and why does Linux need it every cycle
+# call it once and Linux doesn't update
+# call it multiple times and Windows blinks every frame
+
+log("\x1b[2J")
 running = True
 while running:
     for event in pygame.event.get():
@@ -195,21 +209,21 @@ while running:
             width = event.w
             height = event.h
 
-    loop()
+    loop(screen)
     heartbeat_time = heartbeat_time + 1
     if heartbeat_time > heartbeat_limit:
         heartbeat_time = 0
 
     used_ms = clock.tick(target_fps) / 10
     total_ms = 1000 / target_fps
-    print(total_ms)
-    print(used_ms)
+    log(total_ms)
+    log(used_ms)
     if (total_ms > used_ms):
         t = (total_ms - used_ms) / 100
-        print("good - sleeping for: " + str(t))
+        log("good - sleeping for: " + str(t))
         sleep(t)
     else:
-        print("slow                                             ")
+        log("slow                                             ")
     clock.tick(target_fps)
 
 cv2.destroyAllWindows()

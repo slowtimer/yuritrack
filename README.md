@@ -26,11 +26,15 @@ sudo apt install python3-pygame-sdl2
 sudo apt install python3-opencv
 ```
 
-### Other
+### Windows
 
-Use pip or something... idk.
+```cmd
+pip install pygame-ce
+pip install opencv-python
+pip install opencv-contrib-python
+```
 
-## Usage
+## Usage (Linux)
 
 ```bash
 git clone https://github.com/slowtimer/yuritrack
@@ -47,7 +51,7 @@ When any command line argument is provided you will get an alternative setup.
 ```
 
 > "Do you like it??"
-> "I wrote it fot you!"
+> "I wrote it for you!"
 > -- Yuri
 
 For cleaner experience you can redirect cout to null.
@@ -68,5 +72,16 @@ rules: ({
 ```
 
 Now run yuri.py, set it to fullscreen and run i3lock. Everyone around you will appreciate it.
+
+## Usage (Windows)
+
+```cmd
+git clone https://github.com/slowtimer/yuritrack
+cd yuritrack
+python.exe .\yuri.py
+```
+
+Or just download the repo and run it from File Explorer *pleb*.
+You will still need the dependencies.
 
 ![iseeyou](example.gif)
